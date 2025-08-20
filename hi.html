@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+   <meta charset="UTF-8"> 
+   <title>Javascript in browser</title>
+   <body>
+    <h1>Counter</h1>
+    <div id="counter">0</div>
+    <button id="increment">+</button>
+    <button id="decrement">-</button>
+    <script>
+        let count = 0;
+        const counterDiv = document.getElementById('wrong-counter');
+        const incrementButton = document.getElementById('increment');
+        const decrementButton = document.getElementById('decrement');
+
+        const render = ()=>{
+            counterDiv.innerHTML = count;
+        }
+
+        incrementButton.addEventListener('click', () => {
+            count++;
+            render()
+        });
+
+        decrementButton.addEventListener('click', () => {
+            count--;
+            render();
+        });
+    </script>
+    </body>
+</html>
