@@ -54,8 +54,7 @@
 
 ### 3.2.3 브라우저에서 자바스크립트 실행
 
-<a href="./hi.html" target="_blank" rel="noopener noreferrer">HTML 파일 새창에서 열기
-</a>
+다음 HTML은 자바스크립트를 포함하고 있으며, 의도적으로 에러를 발생한 코드가 포함되어 있다. 파일을 클릭하여 브라우저에서 로드한 후, + 혹은 - 버튼을 클릭하면 콘솔에서 에러를 확인할 수 있다. 브라우저에서 자바스크립트가 실행되는 것을 확인할 수 있다.
 
 ```html
 <!DOCTYPE html>
@@ -63,11 +62,85 @@
    <meta charset="UTF-8"> 
    <title>Javascript in browser</title>
    <body>
-    <h1>Hi</h1>
-
+    <h1>Counter</h1>
+    <div id="counter">0</div>
+    <button id="increment">+</button>
+    <button id="decrement">-</button>
     <script>
-        alert("Hi");
+        let count = 0;
+        
+        const counterDiv = document.getElementById('wrong-counter'); // 에러 'wrong-counter' X / 'counter' O
+        const incrementButton = document.getElementById('increment');
+        const decrementButton = document.getElementById('decrement');
+
+        const render = ()=>{
+            counterDiv.innerHTML = count;
+        }
+
+        incrementButton.addEventListener('click', () => {
+            count++;
+            render()
+        });
+
+        decrementButton.addEventListener('click', () => {
+            count--;
+            render();
+        });
     </script>
     </body>
 </html>
 ```
+<p align="center">
+  <img src="img/chapter3/js-in-browser.png" alt="" />
+</p>
+
+### 3.2.4 디버깅
+
+앞선 3.2.3 에서 발생한 에러를 크롬의 Sources 기능을 활용해 디버깅해보자. 위의 이미지에서, 오른쪽의 `hi.html:17` 이라고 적힌 텍스트는 에러 발생 위치를 의미한다.
+
+클릭하면 Sources 패널로 이동한다.
+
+<figure>
+  <img src="img/chapter3/sources.png" alt="" />
+  <figcaption></figcaption>
+</figure>
+
+17라인에서 왼쪽 숫자 17을 클릭하면, 중단점으로 지정이 가능하다. 다시 + 버튼을 클릭하여 에러를 야기해보자. 중단점을 지정하고, 자바스크립트를 실행하면 디버깅 모드에 돌입한다. 아래 이미지와 같이 에러의 원인을 파악할 수 있다.
+
+<figure>
+  <img src="img/chapter3/sources-debug.png" alt="" />
+  <figcaption></figcaption>
+</figure>
+
+## 3.3 Node.js
+
+클라이언트 사이드, 즉 브라우저에서 동작하는 간단한 웹 앱은 브라우저만으로도 개발할 수 있지만, 프로젝트 규모가 커짐에 따라 React, Angular 와 같은 프레임워크 혹은 라이브러리를 사용할 필요가 있다. **이때 Node.js와 `npm`이 필요하다.**
+
+### 3.3.1 Node.js와 npm 소개
+
+앞서 설명했지만, Node.js는 V8 자바스크립트 엔진으로 빌드된 자바스크립트 런타임 환경(실행 환경)이다.
+
+`npm`은 **자바스크립트 패키지 매니저**다. 이는 **Node.js에서 사용할 수 있는 모듈들을 패키지화해서 모아둔 저장소 역할**과 **패키지 설치 및 관리를 위한 CLI**를 제공한다.
+
+### 3.3.2 Node.js 설치
+
+[Node.js](https://nodejs.org/ko)의 웹사이트에 접속해보자. LTS는 Long Term Support 버전으로, 장기적으로 안정된 지원이 보장된다. Current는 최신 버전을 제공한다.
+
+그러므로 실제 개발환경에서는 LTS를, 학습 목적으로는 Current를 다운로드하는 것이 적합하다.
+
+### 3.3.3 Node.js REPL
+
+앞서 브라우저에서 자바스크립트를 실행하듯, Node.js에서 또한 실행할 수 있다.
+
+터미널(윈도우에서는 명령 프롬프트)에서 다음과 같은 명령어를 실행해보자.
+
+```zsh
+$ node
+```
+
+프롬프트가 `>` 로로 변경되면 자바스크립트 코드를 실행해 볼 수있다.
+
+<figure>
+  <img src="img/chapter3/js-in-nodejs.png" alt="" />
+  <figcaption></figcaption>
+</figure>
